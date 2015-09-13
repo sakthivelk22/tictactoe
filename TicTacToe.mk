@@ -5,22 +5,22 @@
 ## Debug
 ProjectName            :=TicTacToe
 ConfigurationName      :=Debug
-WorkspacePath          := "D:\CodeLite\Practice"
-ProjectPath            := "D:\CodeLite\Practice\TicTacToe"
+WorkspacePath          := "F:\CodeBase"
+ProjectPath            := "F:\CodeBase\tictactoe"
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=King0Beasts
-Date                   :=07-09-2015
-CodeLitePath           :="C:\CodeLite"
-LinkerName             :=g++
-SharedObjectLinkerName :=g++ -shared -fPIC
+User                   :=User
+Date                   :=13/09/2015
+CodeLitePath           :="C:\Program Files\CodeLite"
+LinkerName             :=C:/TDM_GCC_MINGW/bin/g++.exe
+SharedObjectLinkerName :=C:/TDM_GCC_MINGW/bin/g++.exe -shared -fPIC
 ObjectSuffix           :=.o
 DependSuffix           :=.o.d
-PreprocessSuffix       :=.o.i
-DebugSwitch            :=-gstab
+PreprocessSuffix       :=.i
+DebugSwitch            :=-g 
 IncludeSwitch          :=-I
 LibrarySwitch          :=-l
 OutputSwitch           :=-o 
@@ -31,12 +31,12 @@ OutputFile             :=$(IntermediateDirectory)/$(ProjectName)
 Preprocessors          :=
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
-PreprocessOnlySwitch   :=-E 
+PreprocessOnlySwitch   :=-E
 ObjectsFileList        :="TicTacToe.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=makedir
 RcCmpOptions           := 
-RcCompilerName         :=windres
+RcCompilerName         :=C:/TDM_GCC_MINGW/bin/windres.exe
 LinkOptions            :=  
 IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). 
 IncludePCH             := 
@@ -47,21 +47,23 @@ LibPath                := $(LibraryPathSwitch).
 
 ##
 ## Common variables
-## AR, CXX, CC, CXXFLAGS and CFLAGS can be overriden using an environment variables
+## AR, CXX, CC, AS, CXXFLAGS and CFLAGS can be overriden using an environment variables
 ##
-AR       := ar rcus
-CXX      := g++
-CC       := gcc
+AR       := C:/TDM_GCC_MINGW/bin/ar.exe rcu
+CXX      := C:/TDM_GCC_MINGW/bin/g++.exe
+CC       := C:/TDM_GCC_MINGW/bin/gcc.exe
 CXXFLAGS :=  -g -O0 -Wall $(Preprocessors)
 CFLAGS   :=  -g -O0 -Wall $(Preprocessors)
+ASFLAGS  := 
+AS       := C:/TDM_GCC_MINGW/bin/as.exe
 
 
 ##
 ## User defined environment variables
 ##
-CodeLiteDir:=C:\CodeLite
-UNIT_TEST_PP_SRC_DIR:=C:\UnitTest++-1.3
-Objects0=$(IntermediateDirectory)/main$(ObjectSuffix) $(IntermediateDirectory)/cell$(ObjectSuffix) $(IntermediateDirectory)/board$(ObjectSuffix) 
+CodeLiteDir:="C:\Program Files\CodeLite"
+UNIT_TEST_PP_SRC_DIR:="C:\UNITTEST_CPP"
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/cell.cpp$(ObjectSuffix) $(IntermediateDirectory)/board.cpp$(ObjectSuffix) 
 
 
 
@@ -70,7 +72,7 @@ Objects=$(Objects0)
 ##
 ## Main Build Targets 
 ##
-.PHONY: all clean PreBuild PrePreBuild PostBuild
+.PHONY: all clean PreBuild PrePreBuild PostBuild MakeIntermediateDirs
 all: $(OutputFile)
 
 $(OutputFile): $(IntermediateDirectory)/.d $(Objects) 
@@ -78,6 +80,10 @@ $(OutputFile): $(IntermediateDirectory)/.d $(Objects)
 	@echo "" > $(IntermediateDirectory)/.d
 	@echo $(Objects0)  > $(ObjectsFileList)
 	$(LinkerName) $(OutputSwitch)$(OutputFile) @$(ObjectsFileList) $(LibPath) $(Libs) $(LinkOptions)
+
+MakeIntermediateDirs:
+	@$(MakeDirCommand) "./Debug"
+
 
 $(IntermediateDirectory)/.d:
 	@$(MakeDirCommand) "./Debug"
@@ -88,29 +94,29 @@ PreBuild:
 ##
 ## Objects
 ##
-$(IntermediateDirectory)/main$(ObjectSuffix): main.cpp $(IntermediateDirectory)/main$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "D:/CodeLite/Practice/TicTacToe/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/main$(DependSuffix): main.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/main$(ObjectSuffix) -MF$(IntermediateDirectory)/main$(DependSuffix) -MM "main.cpp"
+$(IntermediateDirectory)/main.cpp$(ObjectSuffix): main.cpp $(IntermediateDirectory)/main.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "F:/CodeBase/tictactoe/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/main.cpp$(DependSuffix): main.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/main.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/main.cpp$(DependSuffix) -MM "main.cpp"
 
-$(IntermediateDirectory)/main$(PreprocessSuffix): main.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/main$(PreprocessSuffix) "main.cpp"
+$(IntermediateDirectory)/main.cpp$(PreprocessSuffix): main.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/main.cpp$(PreprocessSuffix) "main.cpp"
 
-$(IntermediateDirectory)/cell$(ObjectSuffix): cell.cpp $(IntermediateDirectory)/cell$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "D:/CodeLite/Practice/TicTacToe/cell.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/cell$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/cell$(DependSuffix): cell.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/cell$(ObjectSuffix) -MF$(IntermediateDirectory)/cell$(DependSuffix) -MM "cell.cpp"
+$(IntermediateDirectory)/cell.cpp$(ObjectSuffix): cell.cpp $(IntermediateDirectory)/cell.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "F:/CodeBase/tictactoe/cell.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/cell.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/cell.cpp$(DependSuffix): cell.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/cell.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/cell.cpp$(DependSuffix) -MM "cell.cpp"
 
-$(IntermediateDirectory)/cell$(PreprocessSuffix): cell.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/cell$(PreprocessSuffix) "cell.cpp"
+$(IntermediateDirectory)/cell.cpp$(PreprocessSuffix): cell.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/cell.cpp$(PreprocessSuffix) "cell.cpp"
 
-$(IntermediateDirectory)/board$(ObjectSuffix): board.cpp $(IntermediateDirectory)/board$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "D:/CodeLite/Practice/TicTacToe/board.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/board$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/board$(DependSuffix): board.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/board$(ObjectSuffix) -MF$(IntermediateDirectory)/board$(DependSuffix) -MM "board.cpp"
+$(IntermediateDirectory)/board.cpp$(ObjectSuffix): board.cpp $(IntermediateDirectory)/board.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "F:/CodeBase/tictactoe/board.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/board.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/board.cpp$(DependSuffix): board.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/board.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/board.cpp$(DependSuffix) -MM "board.cpp"
 
-$(IntermediateDirectory)/board$(PreprocessSuffix): board.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/board$(PreprocessSuffix) "board.cpp"
+$(IntermediateDirectory)/board.cpp$(PreprocessSuffix): board.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/board.cpp$(PreprocessSuffix) "board.cpp"
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)
@@ -118,17 +124,6 @@ $(IntermediateDirectory)/board$(PreprocessSuffix): board.cpp
 ## Clean
 ##
 clean:
-	$(RM) $(IntermediateDirectory)/main$(ObjectSuffix)
-	$(RM) $(IntermediateDirectory)/main$(DependSuffix)
-	$(RM) $(IntermediateDirectory)/main$(PreprocessSuffix)
-	$(RM) $(IntermediateDirectory)/cell$(ObjectSuffix)
-	$(RM) $(IntermediateDirectory)/cell$(DependSuffix)
-	$(RM) $(IntermediateDirectory)/cell$(PreprocessSuffix)
-	$(RM) $(IntermediateDirectory)/board$(ObjectSuffix)
-	$(RM) $(IntermediateDirectory)/board$(DependSuffix)
-	$(RM) $(IntermediateDirectory)/board$(PreprocessSuffix)
-	$(RM) $(OutputFile)
-	$(RM) $(OutputFile).exe
-	$(RM) "../.build-debug/TicTacToe"
+	$(RM) -r ./Debug/
 
 

@@ -19,6 +19,15 @@ board::board(int Size)
 
 board::~board()
 {
+	for (int i=0; i<this->boardSize; i++)
+	{
+		for (int j=0; j<this->boardSize; j++)
+		{
+			delete this->cellboard[i][j];
+		}
+        delete[] this->cellboard[i];
+	}
+    delete[] this->cellboard;
 }	
 
 void board::displayBoard()
